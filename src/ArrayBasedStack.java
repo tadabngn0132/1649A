@@ -1,14 +1,17 @@
 // Stack ADT (Abstract Data Type) - LIFO (Last In First Out)
+
+import java.util.NoSuchElementException;
+
 public class ArrayBasedStack<T> {
     // Dùng array list vì hiệu quả hơn vì trong trường hợp này số lượng sách trong stack có thể không quá lớn
     // Nhưng khi số lượng phần tử đạt đến giới hạn kích thước mảng, cần tạo mảng mới lớn hơn
-    private MyArrayList<T> elements;
+    private MyArrayList<T> items;
     private int top;
     private int size;
 
     // Constructor
     public ArrayBasedStack(int size) {
-        this.elements = new MyArrayList<>(size);
+        this.items = new MyArrayList<>(size);
         this.top = -1;
         this.size = size;
     }
@@ -30,10 +33,10 @@ public class ArrayBasedStack<T> {
     // Thêm phần tử vào stack
     public void push(T item) {
         if (isFull()) {
-            throw new RuntimeException("Stack is full.");
+            throw new IllegalStateException("Stack is full.");
         }
 
-        elements.add(item);
+        items.add(item);
         top++;
     }
 
@@ -41,11 +44,11 @@ public class ArrayBasedStack<T> {
     // Lấy phần tử từ stack
     public T pop() {
         if (isEmpty()) {
-            throw new RuntimeException("Stack is empty.");
+            throw new NoSuchElementException("Stack is empty.");
         }
 
-        T item = elements.get(top);
-        elements.remove(top);
+        T item = items.get(top);
+        items.remove(top);
         top--;
 
         return item;
@@ -55,10 +58,10 @@ public class ArrayBasedStack<T> {
     // Xem phần tử đầu stack mà không xóa
     public T peek() {
         if (isEmpty()) {
-            throw new RuntimeException("Stack is empty.");
+            throw new NoSuchElementException("Stack is empty.");
         }
 
-        return elements.get(top);
+        return items.get(top);
     }
 
     // Độ phức tạp O(1)
