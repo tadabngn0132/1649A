@@ -1,14 +1,14 @@
 import java.util.Arrays;
 
 public class MyArrayList<T> {
-    //Type parameter T is used to define a generic class
-
-    // MyArrayList is an Abstract Data Type (ADT)
-    // that encapsulates its underlying data structure and its operations
+    //Type parameter T dùng để định nghĩa một lớp generic
+    
+    // MyArrayList là một Abstract Data Type (ADT)
+    // đóng gói cấu trúc dữ liệu và các phép toán
     private T[] arr;
     private int count;
 
-    // Constructer mặc định với kích thước khởi tạo = 10
+    // Constructor mặc định với kích thước ban đầu = 10
     @SuppressWarnings("unchecked")
     public MyArrayList() {
         arr = (T[]) new Object[10];
@@ -18,8 +18,14 @@ public class MyArrayList<T> {
     // Constructer với kích thước tùy chỉnh
     @SuppressWarnings("unchecked")
     public MyArrayList(int size) {
-        arr = (T[]) new Object[size]; // Initialize the array with the given size
-        count = 0; // Initialize the count of elements in use
+        if (size <= 0) {
+            // Trường hợp người dùng nhập kích thước không hợp lệ
+            System.out.println("Kích thước không hợp lệ " + size + ", sử dụng giá trị mặc định 10");
+            arr = (T[]) new Object[10];
+        } else {
+            arr = (T[]) new Object[size]; // Khởi tạo mảng với kích thước cho trước
+        }
+        count = 0; // Ban đầu số lượng phần tử đang dùng là 0
     }
 
     // Trả về số phần tử hiện có trong danh sách
@@ -27,52 +33,52 @@ public class MyArrayList<T> {
         return count;
     }
 
-    // Trả về giá trị boolean, nếu trả về true là mảng trống, ngược lại là không trống
+    // Kiểm tra xem danh sách có rỗng không
+    // Trả về true nếu danh sách rỗng, ngược lại là false
     public boolean isEmpty() {
         return count == 0;
     }
 
     // Độ phức tạp O(n)
-    // Thêm phần tử vào vị trí index
-    public void insert(int index, T value) {
+    // Chèn phần tử vào vị trí index
+    public void addAt(int index, T value) {
         // Kiểm tra index hợp lệ hay không
         if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + count
-            );
+            System.out.println("Lỗi: Vị trí chèn không hợp lệ: " + index);
+            return;
         }
 
-        // Kiểm tra và mở rộng mảng gấp đôi nếu cần
+        // Kiểm tra xem mảng có đủ không gian để chứa thêm phần tử không
         if (count >= arr.length) {
+            // Nếu mảng đã đầy, tạo mảng mới lớn hơn (gấp đôi)
             arr = Arrays.copyOf(arr, arr.length * 2);
         }
 
-        // Shift all elements starting from the adding index
-        // to the right by one position
+        // Dịch chuyển các phần tử từ vị trí index về sau sang phải
         for (int i = count; i > index; i--) {
             arr[i] = arr[i - 1];
         }
 
-        // Gán giá trị mới vào vị trí index
+        // Chèn phần tử mới vào vị trí index
         arr[index] = value;
-        count++;
+        count++; // Tăng số lượng phần tử lên 1
     }
 
 
-    // Độ phức tạp O(n)
-    // Thêm phần tử vào cuối array
+    // Độ phức tạp O(n) - trong trường hợp xấu nhất
+    // Thêm phần tử vào cuối danh sách
     public void add(T value) {
-        insert(count, value);
+        addAt(count, value);
     }
 
 
     // Độ phức tạp O(1)
     // Lấy phần tử tại vị trí index
     public T get(int index) {
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + count
-            );
+        // Kiểm tra index có hợp lệ không
+        if (index < 0 || index >= count) {
+            System.out.println("Lỗi: Index ngoài phạm vi: " + index);
+            return null;
         }
 
         return arr[index];
@@ -82,10 +88,10 @@ public class MyArrayList<T> {
     // Độ phức tạp O(1)
     // Cập nhật giá trị tại vị trí index
     public T set(int index, T value) {
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + count
-            );
+        // Kiểm tra index có hợp lệ không
+        if (index < 0 || index >= count) {
+            System.out.println("Lỗi: Index ngoài phạm vi: " + index);
+            return null;
         }
 
         T oldValue = arr[index];
@@ -97,10 +103,10 @@ public class MyArrayList<T> {
     // Độ phức tạp O(n)
     // Xóa phần tử tại vị trí index
     public T remove(int index) {
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + count
-            );
+        // Kiểm tra index có hợp lệ không
+        if (index < 0 || index >= count) {
+            System.out.println("Lỗi: Index ngoài phạm vi: " + index);
+            return null;
         }
 
         // Lưu lại giá trị cần xóa để trả về
@@ -111,7 +117,7 @@ public class MyArrayList<T> {
             arr[i] = arr[i + 1];
         }
 
-        // Xóa tham chiếu đến phần tử cuối để tránh memory leak
+        // Gán null cho phần tử cuối cùng
         arr[count - 1] = null;
         count--;
 
@@ -122,8 +128,11 @@ public class MyArrayList<T> {
     // Tìm vị trí đầu tiên của phần tử
     public int indexOf(T value) {
         if (value == null) {
-            throw new NullPointerException("Value can not be null");
+            // Nếu tìm null thì thông báo rồi trả về -1
+            System.out.println("Không hỗ trợ tìm kiếm giá trị null");
+            return -1;
         } else {
+            // Duyệt qua từng phần tử để tìm
             for (int i = 0; i < count; i++) {
                 if (value == arr[i]) {
                     return i;
@@ -135,12 +144,15 @@ public class MyArrayList<T> {
     }
 
     // Độ phức tạp O(n)
+    // Kiểm tra xem danh sách có chứa phần tử không
     public boolean contains(T value) {
         return indexOf(value) >= 0;
     }
 
     // Độ phức tạp O(n)
+    // Xóa tất cả phần tử trong danh sách
     public void clear() {
+        // Gán null cho tất cả phần tử
         for (int i = 0; i < count; i++) {
             arr[i] = null;
         }
@@ -153,9 +165,9 @@ public class MyArrayList<T> {
         System.out.println(Arrays.toString(arr));
     }
 
-    // Độ phức tạp O(n) 
+    // Độ phức tạp O(n)
+    // In các phần tử đang được sử dụng
     public void printAllExistElement() {
-        // In ra chỉ các phần tử đang được dùng
         System.out.print("[");
         for(int i=0; i<count; i++){
             System.out.print(arr[i]);

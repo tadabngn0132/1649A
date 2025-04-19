@@ -1,5 +1,3 @@
-import java.util.NoSuchElementException;
-
 public class ArrayBasedQueue<T> {
     private MyArrayList<T> items;
 
@@ -20,7 +18,8 @@ public class ArrayBasedQueue<T> {
     // Độ phức tạp O(n)
     public T dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            System.out.println("Hàng đợi rỗng. Không thể lấy phần tử.");
+            return null;
         }
 
         return items.remove(0);
@@ -28,7 +27,8 @@ public class ArrayBasedQueue<T> {
 
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            System.out.println("Hàng đợi rỗng. Không thể lấy phần tử.");
+            return null;
         }
 
         return items.get(0);

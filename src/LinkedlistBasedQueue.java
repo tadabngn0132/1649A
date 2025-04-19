@@ -1,5 +1,3 @@
-import java.util.NoSuchElementException;
-
 public class LinkedlistBasedQueue<T> {
     private MyLinkedList<T> items;
 
@@ -17,7 +15,8 @@ public class LinkedlistBasedQueue<T> {
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            System.out.println("Queue is empty!");
+            return null;
         }
 
         return items.removeFirst();
@@ -25,7 +24,8 @@ public class LinkedlistBasedQueue<T> {
 
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            System.out.println("Queue is empty!");
+            return null;
         }
 
         return items.get(0);

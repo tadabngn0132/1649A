@@ -62,10 +62,10 @@ public class MyLinkedList<T> {
 
     // Thêm phần tử vào vị trí tùy chọn
     public void addAt(int index, T data) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + size
-            );
+        // Kiểm tra index có hợp lệ không
+        if (index < 0 || index >= size) {
+            System.out.println("Lỗi: Index ngoài phạm vi: " + index);
+            return;
         }
 
         if (index == 0) {
@@ -91,7 +91,8 @@ public class MyLinkedList<T> {
     // Xóa phần tử đầu tiên
     public T removeFirst() {
         if (isEmpty()) {
-            throw new RuntimeException("Linkedlist is empty.");
+            System.out.println("Linked list is empty!");
+            return null;
         }
 
         T data = head.data;
@@ -108,7 +109,8 @@ public class MyLinkedList<T> {
     // Xóa phần tử cuối cùng
     public T removeLast() {
         if (isEmpty()) {
-            throw new RuntimeException("Linked list is empty.");
+            System.out.println("Linked list is empty!");
+            return null;
         }
 
         if (head == tail) {
@@ -129,10 +131,9 @@ public class MyLinkedList<T> {
     }
 
     public T removeAt(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + size
-            );
+        if (isEmpty()) {
+            System.out.println("Linked list is empty!");
+            return null;
         }
         
         if (index == 0) {
@@ -157,10 +158,9 @@ public class MyLinkedList<T> {
 
     // Lấy phần tử tại vị trí tùy chọn
     public T get(int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + size
-            );
+        if (isEmpty()) {
+            System.out.println("Linked list is empty!");
+            return null;
         }
 
         Node current = head;
@@ -197,10 +197,10 @@ public class MyLinkedList<T> {
     
     // Cập nhật giá trị tại vị trí chỉ định
     public void set(int index, T data) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException(
-                "Index: " + index + ", Size: " + size
-            );
+        // Kiểm tra index có hợp lệ không
+        if (index < 0 || index >= size) {
+            System.out.println("Lỗi: Index ngoài phạm vi: " + index);
+            return;
         }
         
         Node current = head;

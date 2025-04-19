@@ -1,5 +1,3 @@
-import java.util.NoSuchElementException;
-
 public class LinkedlistBasedStack<T> {
     private MyLinkedList<T> items;
     private int top;
@@ -16,7 +14,8 @@ public class LinkedlistBasedStack<T> {
 
     public T pop() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
+            System.out.println("Stack is empty!");
+            return null;
         }
 
         T item = items.get(top);
@@ -28,7 +27,8 @@ public class LinkedlistBasedStack<T> {
 
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
+            System.out.println("Stack is empty!");
+            return null;
         }
         
         return items.get(top);

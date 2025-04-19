@@ -1,7 +1,4 @@
 // Stack ADT (Abstract Data Type) - LIFO (Last In First Out)
-
-import java.util.NoSuchElementException;
-
 public class ArrayBasedStack<T> {
     // Dùng array list vì hiệu quả hơn vì trong trường hợp này số lượng sách trong stack có thể không quá lớn
     // Nhưng khi số lượng phần tử đạt đến giới hạn kích thước mảng, cần tạo mảng mới lớn hơn
@@ -33,7 +30,8 @@ public class ArrayBasedStack<T> {
     // Thêm phần tử vào stack
     public void push(T item) {
         if (isFull()) {
-            throw new IllegalStateException("Stack is full.");
+            System.out.println("Stack đã đầy. Không thể thêm phần tử mới.");
+            return;
         }
 
         items.add(item);
@@ -44,7 +42,8 @@ public class ArrayBasedStack<T> {
     // Lấy phần tử từ stack
     public T pop() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
+            System.out.println("Stack rỗng. Không thể lấy phần tử.");
+            return null;
         }
 
         T item = items.get(top);
@@ -58,7 +57,8 @@ public class ArrayBasedStack<T> {
     // Xem phần tử đầu stack mà không xóa
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
+            System.out.println("Stack rỗng. Không thể lấy phần tử.");
+            return null;
         }
 
         return items.get(top);
